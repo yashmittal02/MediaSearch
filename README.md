@@ -75,6 +75,10 @@ src
 
 ```
 
+## 🌐 Live Demo
+
+🔗 **https://media-search-gules.vercel.app/**
+
 ## 🎯 Key Learnings
 
 This project helped me gain practical experience with:
