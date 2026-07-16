@@ -119,6 +119,7 @@ This project helped me gain practical experience with:
 - GitHub: https://github.com/yashmittal02
 - LinkedIn: https://www.linkedin.com/in/yash-mittal-550462279/
 - Portfolio: https://yashmittal02.github.io/online-cv/
+- HackerRank: https://www.hackerrank.com/profile/yashmittal02
 
 ---
 
