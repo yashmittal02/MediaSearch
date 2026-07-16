@@ -18,7 +18,7 @@ const SearchBar = () => {
         onSubmit={(e) => {
           submitHandler(e);
         }}
-        className="flex justify-center items-center gap-5 p-5"
+        className="flex flex-col sm:flex-row gap-4 justify-center items-center gap-5 p-5"
       >
         <input
           value={text}
@@ -26,7 +26,7 @@ const SearchBar = () => {
             setText(e.target.value);
           }}
           required
-          className="border-1 px-4 py-3 text-xl rounded-xl outline-none w-full bg-(--c2)"
+          className="border-1 px-4 py-3 text-xl rounded-xl outline-none w-full sm:w-auto bg-(--c2)"
           type="text"
           placeholder="Search Anything..."
         />

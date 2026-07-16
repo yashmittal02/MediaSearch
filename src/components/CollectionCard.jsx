@@ -12,8 +12,19 @@ const CollectionCard = ({ item }) => {
     dispatch(removeToast());
   };
   return (
-    <div className="flex  w-full flex-wrap gap-5 overflow-auto py-6 px-10 ">
-      <div className="w-[17vw] justify-start relative h-75 bg-white rounded-xl overflow-hidden border-1 border-white">
+    <div
+      className="
+      w-full
+      h-80
+      relative
+      bg-white
+      rounded-xl
+      overflow-hidden
+      border
+      border-white
+    "
+    >
+      <div className="w-full h-80 justify-start relative h-75 bg-white rounded-xl overflow-hidden border-1 border-white">
         <a className="h-full" target="_blank" href={item.url}>
           {item.type == "Photo" ? (
             <img
@@ -45,9 +56,9 @@ const CollectionCard = ({ item }) => {
         </a>
         <div
           id="bottom"
-          className="flex gap-3 justify-between items-center w-full px-6 py-5 absolute bottom-0 text-white "
+          className="flex gap-3 flex-col md:flex-row items-center w-full px-6 py-5 absolute bottom-0 text-white "
         >
-          <h2 className="text-lg font-semibold capitalize h-15 overflow-hidden">
+          <h2 className="text-base md:text-lg font-semibold capitalize h-12 overflow-hidden">
             {item.title}
           </h2>
           <button

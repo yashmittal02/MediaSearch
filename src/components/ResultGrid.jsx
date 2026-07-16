@@ -88,14 +88,23 @@ const ResultGrid = () => {
   }
 
   return (
-    <div className="flex justify-between w-full flex-wrap gap-5 overflow-auto py-6 px-10 ">
-      {results.map((item, idx) => {
-        return (
-          <div key={idx}>
-            <ResultCard item={item} />
-          </div>
-        );
-      })}
+    <div
+      className="
+      grid
+      grid-cols-1
+      sm:grid-cols-2
+      lg:grid-cols-3
+      xl:grid-cols-4
+      gap-6
+      px-4
+      sm:px-6
+      lg:px-10
+      py-6
+    "
+    >
+      {results.map((item) => (
+        <ResultCard key={item.id} item={item} />
+      ))}
     </div>
   );
 };
