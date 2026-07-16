@@ -2,13 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const searchSlice = createSlice({
   name: "search",
   initialState: {
+    searchText: "",
     query: "",
-    activeTab: "photos",
+    activeTab: "Photos",
     results: [],
     loading: false,
     error: null,
   },
   reducers: {
+    resetSearch(state) {
+      state.searchText = "";
+      state.query = "";
+      state.results = [];
+      state.error = null;
+      state.activeTab = "Photos";
+    },
+    setSearchText(state, action) {
+      state.searchText = action.payload;
+    },
     setQuery(state, action) {
       state.query = action.payload;
     },
@@ -38,6 +49,8 @@ export const {
   setError,
   setLoading,
   setQuery,
+  setSearchText,
   setResults,
   clearResults,
+  resetSearch,
 } = searchSlice.actions;

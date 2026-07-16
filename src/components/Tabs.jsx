@@ -1,26 +1,40 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAc } from "../redux/features/searchSlice";
+import { setAc, setQuery } from "../redux/features/searchSlice";
+
+const tabs = [
+  { label: "📷 Photos", value: "Photos" },
+  { label: "🎥 Videos", value: "Videos" },
+  { label: "🎉 GIFs", value: "gif" },
+];
 
 const Tabs = () => {
-  const tabs = ["Photos", "Videos", "gif"];
   const dispatch = useDispatch();
-  const activeTab = useSelector((state) => state.search.activeTab);
+
+  const { activeTab, searchText } = useSelector((state) => state.search);
+
+  const handleTabChange = (tab) => {
+    dispatch(setAc(tab));
+
+    if (searchText.trim()) {
+      dispatch(setQuery(searchText.trim()));
+    }
+  };
+
   return (
-    <div className="flex gap-5 py-2 px-5 ">
-      {tabs.map(function (elem, idx) {
-        return (
-          <button
-            className={`${activeTab === elem ? "bg-(--c2) text-(--c4) font-bold" : "bg-(--c4)"} rounded-xl w-full cursor-pointer active:scale-95 px-5 py-2 round uppercase border-1 border-white text-(--c2) text-xl`}
-            key={idx}
-            onClick={() => {
-              dispatch(setAc(elem));
-            }}
-          >
-            {elem}
-          </button>
-        );
-      })}
+    <div className="flex flex-wrap justify-center gap-3">
+      {tabs.map((tab) => (
+        <button
+          key={tab.value}
+          onClick={() => handleTabChange(tab.value)}
+          className={`rounded-xl border px-5 py-2 text-base font-semibold transition-all duration-300 cursor-pointer ${
+            activeTab === tab.value
+              ? "bg-[var(--c4)] text-[var(--c1)] border-[var(--c4)]"
+              : "bg-[var(--c2)] text-white border-white/20 hover:bg-[var(--c4)] hover:text-[var(--c1)]"
+          }`}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
   );
 };

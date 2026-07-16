@@ -1,11 +1,10 @@
 import React from "react";
-import ResultGrid from "../components/ResultGrid";
-import SearchBar from "../components/SearchBar";
-import Tabs from "../components/Tabs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useDispatch } from "react-redux";
-import { setQuery } from "../redux/features/searchSlice";
+import ResultGrid from "../components/ResultGrid";
+import SearchSection from "../components/SearchSection";
+
+import { setQuery, setSearchText } from "../redux/features/searchSlice";
 
 const trending = [
   "Nature",
@@ -17,97 +16,124 @@ const trending = [
   "Dogs",
   "Football",
 ];
+
 const HomePage = () => {
   const dispatch = useDispatch();
   const { query } = useSelector((store) => store.search);
+
+  const handleTrending = (item) => {
+    dispatch(setSearchText(item));
+    dispatch(setQuery(item));
+  };
+
   return (
     <div>
       <hr />
-      <SearchBar />
+
+      <SearchSection />
 
       {query !== "" ? (
-        <>
-          <Tabs />
-          <ResultGrid />
-        </>
+        <ResultGrid />
       ) : (
-        <div className="">
-          <div className="mt-10 text-center">
-            <h2 className="text-3xl font-bold mb-8">🔥 Trending Searches</h2>
+        <div className="mx-auto max-w-7xl px-4 py-10">
+          {/* Trending */}
+          <section className="text-center">
+            <h2 className="mb-8 text-3xl font-bold">🔥 Trending Searches</h2>
 
             <div className="flex flex-wrap justify-center gap-4">
               {trending.map((item) => (
                 <button
                   key={item}
-                  onClick={() => dispatch(setQuery(item))}
-                  className="px-6 py-3 rounded-full bg-[var(--c1)] border border-white/10 hover:bg-[var(--c4)] hover:text-[var(--c1)] transition-all duration-300 hover:scale-105 active:scale-95"
+                  onClick={() => handleTrending(item)}
+                  className="
+                    rounded-full
+                    border
+                    border-white/10
+                    bg-[var(--c1)]
+                    px-6
+                    py-3
+                    transition-all
+                    duration-300
+                    hover:scale-105
+                    hover:bg-[var(--c4)]
+                    hover:text-[var(--c1)]
+                    active:scale-95
+                  "
                 >
                   {item}
                 </button>
               ))}
             </div>
-          </div>
+          </section>
+
           {/* Hero */}
-          <div className="mt-16 text-center max-w-4xl mx-auto px-6">
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-              Discover Photos, Videos & GIFs
+          <section className="mx-auto mt-20 max-w-4xl text-center">
+            <h1 className="text-4xl font-extrabold leading-tight md:text-6xl">
+              Discover Photos,
+              <br />
+              Videos & GIFs
             </h1>
 
-            <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 leading-9">
+            <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-400 md:text-xl">
               Search millions of high-quality images, HD videos and trending
               GIFs powered by Unsplash, Pexels and GIPHY.
             </p>
-          </div>
-          <div className="flex justify-center gap-6 mt-12 flex-wrap">
-            <div className="text-center">
+          </section>
+
+          {/* Stats */}
+          <section className="mt-16 grid grid-cols-1 gap-8 text-center sm:grid-cols-3">
+            <div>
               <h2 className="text-4xl font-bold text-[var(--c4)]">3</h2>
-              <p className="text-gray-400">Media APIs</p>
+
+              <p className="mt-2 text-gray-400">Media APIs</p>
             </div>
 
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-[var(--c4)]">30+</h2>
-              <p className="text-gray-400">Results per Search</p>
+            <div>
+              <h2 className="text-4xl font-bold text-[var(--c4)]">150+</h2>
+
+              <p className="mt-2 text-gray-400">Results Per Search</p>
             </div>
 
-            <div className="text-center">
+            <div>
               <h2 className="text-4xl font-bold text-[var(--c4)]">∞</h2>
-              <p className="text-gray-400">Search Possibilities</p>
+
+              <p className="mt-2 text-gray-400">Search Possibilities</p>
             </div>
-          </div>
+          </section>
 
           {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16 px-8">
-            <div className="bg-[var(--c1)] rounded-2xl p-8 border border-white/10 hover:-translate-y-3 hover:shadow-2xl hover:border-[var(--c4)] hover:shadow-xl transition-all duration-300">
-              <div className="text-6xl mb-6">📷</div>
+          <section className="mt-20 grid gap-8 md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-[var(--c1)] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--c4)] hover:shadow-2xl">
+              <div className="mb-6 text-6xl">📷</div>
 
-              <h2 className="text-2xl font-bold mb-3">Photos</h2>
+              <h2 className="mb-3 text-2xl font-bold">Photos</h2>
 
-              <p className="text-gray-300">
-                Explore millions of beautiful high-resolution images from
+              <p className="leading-7 text-gray-300">
+                Explore millions of stunning high-resolution images powered by
                 Unsplash.
               </p>
             </div>
 
-            <div className="bg-[var(--c1)] rounded-2xl p-8 border border-white/10 hover:-translate-y-3 hover:shadow-2xl hover:border-[var(--c4)] hover:shadow-xl transition-all duration-300">
-              <div className="text-6xl mb-6">🎥</div>
+            <div className="rounded-2xl border border-white/10 bg-[var(--c1)] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--c4)] hover:shadow-2xl">
+              <div className="mb-6 text-6xl">🎥</div>
 
-              <h2 className="text-2xl font-bold mb-3">Videos</h2>
+              <h2 className="mb-3 text-2xl font-bold">Videos</h2>
 
-              <p className="text-gray-300">
-                Search thousands of free HD videos powered by Pexels.
+              <p className="leading-7 text-gray-300">
+                Browse thousands of beautiful HD videos from the Pexels library.
               </p>
             </div>
 
-            <div className="bg-[var(--c1)] rounded-2xl p-8 border border-white/10 hover:-translate-y-3 hover:shadow-2xl hover:border-[var(--c4)] hover:shadow-xl transition-all duration-300">
-              <div className="text-6xl mb-6">🎉</div>
+            <div className="rounded-2xl border border-white/10 bg-[var(--c1)] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--c4)] hover:shadow-2xl">
+              <div className="mb-6 text-6xl">🎉</div>
 
-              <h2 className="text-2xl font-bold mb-3">GIFs</h2>
+              <h2 className="mb-3 text-2xl font-bold">GIFs</h2>
 
-              <p className="text-gray-300">
-                Find funny and trending GIFs instantly using GIPHY.
+              <p className="leading-7 text-gray-300">
+                Discover trending and entertaining GIFs instantly using GIPHY.
               </p>
             </div>
-          </div>
+          </section>
         </div>
       )}
     </div>

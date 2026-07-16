@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import {
   removeCollection,
@@ -7,63 +6,107 @@ import {
 
 const CollectionCard = ({ item }) => {
   const dispatch = useDispatch();
+
   const removeFromCollection = () => {
     dispatch(removeCollection(item.id));
     dispatch(removeToast());
   };
+
   return (
     <div
       className="
-      w-full
-      h-80
-      relative
-      bg-white
-      rounded-xl
-      overflow-hidden
-      border
-      border-white
-    "
+        relative
+        h-80
+        w-full
+        overflow-hidden
+        rounded-xl
+        border
+        border-white/10
+        bg-white
+        shadow-md
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-2xl
+      "
     >
-      <div className="w-full h-80 justify-start relative h-75 bg-white rounded-xl overflow-hidden border-1 border-white">
-        <a className="h-full" target="_blank" href={item.url}>
-          {item.type == "Photo" ? (
-            <img
-              className="h-full w-full object-cover object-center"
-              src={item.src}
-            />
-          ) : (
-            ""
-          )}
-          {item.type == "Videos" ? (
-            <video
-              className="h-full w-full object-cover object-center"
-              autoPlay
-              loop
-              muted
-              src={item.src}
-            />
-          ) : (
-            ""
-          )}
-          {item.type == "gif" ? (
-            <img
-              className="h-full w-full object-cover object-center"
-              src={item.src}
-            />
-          ) : (
-            ""
-          )}
-        </a>
-        <div
-          id="bottom"
-          className="flex gap-3 flex-col md:flex-row items-center w-full px-6 py-5 absolute bottom-0 text-white "
-        >
-          <h2 className="text-base md:text-lg font-semibold capitalize h-12 overflow-hidden">
-            {item.title}
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full"
+      >
+        {item.type === "Photo" && (
+          <img
+            src={item.src}
+            alt={item.title}
+            loading="lazy"
+            className="h-full w-full object-cover object-center"
+          />
+        )}
+
+        {item.type === "Videos" && (
+          <video
+            src={item.src}
+            autoPlay
+            muted
+            loop
+            className="h-full w-full object-cover object-center"
+          />
+        )}
+
+        {item.type === "gif" && (
+          <img
+            src={item.src}
+            alt={item.title}
+            loading="lazy"
+            className="h-full w-full object-cover object-center"
+          />
+        )}
+      </a>
+
+      <div
+        className="
+          absolute
+          bottom-0
+          left-0
+          w-full
+          bg-gradient-to-t
+          from-black/90
+          via-black/50
+          to-transparent
+          p-4
+        "
+      >
+        <div className="flex flex-col gap-3">
+          <h2
+            className="
+              text-sm
+              sm:text-base
+              md:text-lg
+              font-semibold
+              text-white
+              capitalize
+              line-clamp-2
+            "
+          >
+            {item.title || "Untitled"}
           </h2>
+
           <button
             onClick={removeFromCollection}
-            className="bg-teal-700 text-white rounded px-3 py-2 font-medium cursor-pointer active:scale-85"
+            className="
+              w-full
+              rounded-lg
+              bg-red-600
+              py-2
+              font-semibold
+              text-white
+              transition-all
+              duration-300
+              hover:bg-red-700
+              active:scale-95
+            "
           >
             Remove
           </button>

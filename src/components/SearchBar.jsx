@@ -1,44 +1,38 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setQuery } from "../redux/features/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuery, setSearchText } from "../redux/features/searchSlice";
 
 const SearchBar = () => {
-  const [text, setText] = useState("");
-
   const dispatch = useDispatch();
+  const { searchText } = useSelector((state) => state.search);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(setQuery(text));
-    setText("");
-  };
-  return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          submitHandler(e);
-        }}
-        className="flex flex-col sm:flex-row gap-4 justify-center items-center gap-5 p-5"
-      >
-        <input
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-          required
-          className="border-1 px-4 py-3 text-xl rounded-xl outline-none w-full sm:w-auto bg-(--c2)"
-          type="text"
-          placeholder="Search Anything..."
-        />
 
-        <button
-          type="submit"
-          className="border-1 px-6 py-3 text-xl rounded-xl active:scale-95 cursor-pointer bg-(--c2)"
-        >
-          Search
-        </button>
-      </form>
-    </div>
+    if (!searchText.trim()) return;
+
+    dispatch(setQuery(searchText.trim()));
+  };
+
+  return (
+    <form onSubmit={submitHandler} className="w-full">
+      <input
+        value={searchText}
+        onChange={(e) => dispatch(setSearchText(e.target.value))}
+        className="
+      w-full
+      rounded-xl
+      border
+      border-white/20
+      bg-[var(--c2)]
+      px-5
+      py-3
+      text-lg
+      outline-none
+    "
+        type="text"
+        placeholder="Search Photos, Videos & GIFs..."
+      />
+    </form>
   );
 };
 

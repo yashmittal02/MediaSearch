@@ -1,97 +1,126 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCollection, addedToast } from "../redux/features/collectionSlice";
 
 const ResultCard = ({ item }) => {
   const dispatch = useDispatch();
-  const addToCollection = (item) => {
+
+  const collection = useSelector((state) => state.collection.items);
+
+  const alreadyAdded = collection.some(
+    (collectionItem) => collectionItem.id === item.id,
+  );
+
+  const addToCollection = () => {
+    if (alreadyAdded) return;
+
     dispatch(addCollection(item));
     dispatch(addedToast());
   };
+
   return (
     <div
       className="
-    w-full
-    sm:w-[280px]
-    md:w-[300px]
-    lg:w-[17vw]
-    h-80
-    relative
-    bg-white
-    rounded-xl
-    overflow-hidden
-    border
-    border-white
-  "
+        relative
+        h-80
+        w-full
+        overflow-hidden
+        rounded-xl
+        border
+        border-white/10
+        bg-white
+        shadow-md
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-2xl
+      "
     >
-      <a className="h-full" target="_blank" href={item.url}>
-        {item.type == "Photo" ? (
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full"
+      >
+        {item.type === "Photo" && (
           <img
-            className="h-full w-full object-cover object-center"
             src={item.src}
+            alt={item.title}
+            loading="lazy"
+            className="h-full w-full object-cover object-center"
           />
-        ) : (
-          ""
         )}
-        {item.type == "Videos" ? (
+
+        {item.type === "Videos" && (
           <video
-            className="h-full w-full object-cover object-center"
+            src={item.src}
             autoPlay
-            loop
             muted
-            src={item.src}
-          />
-        ) : (
-          ""
-        )}
-        {item.type == "gif" ? (
-          <img
+            loop
             className="h-full w-full object-cover object-center"
-            src={item.src}
           />
-        ) : (
-          ""
+        )}
+
+        {item.type === "gif" && (
+          <img
+            src={item.src}
+            alt={item.title}
+            loading="lazy"
+            className="h-full w-full object-cover object-center"
+          />
         )}
       </a>
+
       <div
-        id="bottom"
         className="
-absolute
-bottom-0
-left-0
-w-full
-bg-gradient-to-t
-from-black/80
-to-transparent
-p-4
-flex
-flex-col
-gap-3
-"
+          absolute
+          bottom-0
+          left-0
+          w-full
+          bg-gradient-to-t
+          from-black/90
+          via-black/50
+          to-transparent
+          p-4
+        "
       >
-        <h2
-          className="
-    text-base
-    md:text-lg
-    font-semibold
-    capitalize
-    line-clamp-2
-    text-center
-    md:text-left
-  "
-        >
-          {item.title}
-        </h2>
-        <button
-          onClick={() => {
-            addToCollection(item);
-          }}
-          className="bg-teal-700 text-white rounded px-3 py-2 font-medium cursor-pointer active:scale-85"
-        >
-          Save
-        </button>
+        <div className="flex flex-col gap-3">
+          <h2
+            className="
+              text-sm
+              sm:text-base
+              md:text-lg
+              font-semibold
+              text-white
+              capitalize
+              line-clamp-2
+            "
+          >
+            {item.title || "Untitled"}
+          </h2>
+
+          <button
+            onClick={addToCollection}
+            disabled={alreadyAdded}
+            className={`
+              w-full
+              rounded-lg
+              py-2
+              font-semibold
+              transition-all
+              duration-300
+              cursor-pointer
+              ${
+                alreadyAdded
+                  ? "bg-green-600 cursor-not-allowed text-white"
+                  : "bg-teal-600 text-white hover:bg-teal-700 active:scale-95"
+              }
+            `}
+          >
+            {alreadyAdded ? "✔ Added" : "Save"}
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-
 export default ResultCard;
